@@ -132,6 +132,8 @@ with open('test.txt', "w") as f:
 ```
 
 ### Результат.
+
+
 ![image](https://github.com/AndruhaRazebuha/Software_Engineering/assets/133500965/337fe3cc-5719-4283-98a1-8f89a6ffcfa1)
 ![image](https://github.com/AndruhaRazebuha/Software_Engineering/assets/133500965/32dc81e2-cf56-4d70-9c83-2f495f2a9b63)
 
@@ -266,5 +268,298 @@ with open('rows_300.csv', 'w', encoding='utf-8', newline='') as f:
 
 
 
+## Самостоятельная работа #1
+Найдите в интернете любую статью (объем статьи не менее 200 слов), скопируйте ее содержимое в файл и напишите программу, которая считает количество слов в текстовом файле и определит самое часто встречающееся слово. Результатом выполнения задачи будет: скриншот файла со статьей, листинг кода, и вывод в консоль, в котором будет указана вся необходимая информация.
+```python
+import string
+def count_words(filename):
+    word_count = {}
+    most_common_word = ""
+    max_count = 0
+    with open(filename, 'r', encoding='utf-8') as file:
+        text = file.read().lower()
+        words = text.split()
+        for word in words:
+            word = word.strip(string.punctuation)  # Удаляем знаки препинания из слова
+            if word:
+                if word in word_count:
+                    word_count[word] += 1
+                else:
+                    word_count[word] = 1
+                if word_count[word] > max_count:
+                    max_count = word_count[word]
+                    most_common_word = word
+    total_words = sum(word_count.values())
+    return total_words, most_common_word, max_count
+if __name__ == "__main__":
+    filename = "statia.txt"
+    total_words, most_common_word, max_count = count_words(filename)
+
+    print("Всего слов в файле:", total_words)
+    print("Самое часто встречающееся слово:", most_common_word)
+    print("Количество повторений:", max_count)
+```
+
+### Результат.
+![image](https://github.com/AndruhaRazebuha/Software_Engineering/assets/133500965/78422323-ab99-4ad7-b8a3-fc8422895ed2)
+
+
+## Выводы
+import string  # Импортируем модуль string для работы со строками и знаками препинания.
+
+def count_words(filename):
+    word_count = {}  # Создаем пустой словарь для подсчета слов и их количества.
+    most_common_word = ""  # Переменная для хранения самого часто встречающегося слова.
+    max_count = 0  # Переменная для хранения количества повторений самого частого слова.
+
+    with open(filename, 'r', encoding='utf-8') as file:  # Открываем файл для чтения в указанной кодировке.
+        text = file.read().lower()  # Читаем содержимое файла и преобразуем его в нижний регистр.
+        words = text.split()  # Разбиваем текст на слова, используя пробелы как разделители.
+
+        for word in words:
+            word = word.strip(string.punctuation)  # Удаляем знаки препинания из слова, используя string.punctuation.
+            if word:  # Проверяем, что слово не пустое после удаления знаков препинания.
+                if word in word_count:
+                    word_count[word] += 1  # Увеличиваем счетчик для уже встреченных слов.
+                else:
+                    word_count[word] = 1  # Добавляем новое слово в словарь с начальным счетчиком 1.
+
+                if word_count[word] > max_count:
+                    max_count = word_count[word]  # Обновляем максимальное количество повторений и самое частое слово.
+
+    total_words = sum(word_count.values())  # Считаем общее количество слов в тексте.
+    return total_words, most_common_word, max_count  # Возвращаем результаты анализа.
+
+if __name__ == "__main__":
+    filename = "statia.txt"  # Указываем имя файла для анализа.
+    total_words, most_common_word, max_count = count_words(filename)  # Вызываем функцию count_words.
+
+    # Выводим результаты анализа на экран.
+    print("Всего слов в файле:", total_words)
+    print("Самое часто встречающееся слово:", most_common_word)
+    print("Количество повторений:", max_count)
+
+
+## Самостоятельная работа #2
+У вас появилась потребность в ведении книги расходов, посмотрев все существующие варианты вы пришли к выводу что вас ничего не устраивает и нужно все делать самому. Напишите программу для учета расходов. Программа должна позволять вводить информацию о расходах, сохранять ее в файл и выводить существующие данные в консоль. Ввод информации происходит через консоль. Результатом выполнения задачи будет
+```python
+import os
+
+def enter_expense():  # Функция для ввода информации о расходах
+    expense_date = input("Введите дату расхода (например, 2023-10-21): ")
+    expense_description = input("Введите описание расхода: ")
+    expense_amount = float(input("Введите сумму расхода: "))
+    return {
+        "Дата": expense_date,
+        "Описание": expense_description,
+        "Сумма": expense_amount
+    }
+def save_expense(expense, filename):  # Функция для сохранения информации о расходах в файл
+    with open(filename, "a", encoding="utf-8") as file:
+        file.write(f"{expense['Дата']} - {expense['Описание']} - {expense['Сумма']} руб.\n")
+def display_expenses(filename): # Функция для вывода всех расходов из файла
+    if not os.path.exists(filename):
+        print("Файл с расходами пуст.")
+        return
+
+    with open(filename, "r", encoding="utf-8") as file:
+        expenses = file.readlines()
+        if not expenses:
+            print("Файл с расходами пуст.")
+        else:
+            print("Список расходов:")
+            for expense in expenses:
+                print(expense, end="")
+
+if __name__ == "__main__":
+    expense_file = "zadanie2.txt"  # Имя файла для хранения расходов
+
+    while True:
+        print("\nВыберите действие:")
+        print("1. Ввести новый расход")
+        print("2. Вывести список всех расходов")
+        print("3. Выход")
+        choice = input("Введите номер действия: ")
+        if choice == "1":
+            expense = enter_expense()
+            save_expense(expense, expense_file)
+            print("Расход успешно добавлен.")
+        elif choice == "2":
+            display_expenses(expense_file)
+        elif choice == "3":
+            break
+        else:
+            print("Неверный выбор. Попробуйте снова.")
+```
+
+### Результат.
+![image](https://github.com/AndruhaRazebuha/Software_Engineering/assets/133500965/923573ff-681e-4e1c-93e1-3187afeeabc5)
+![image](https://github.com/AndruhaRazebuha/Software_Engineering/assets/133500965/87c771f8-0558-477b-9d18-48cdd6b3b00c)
+![image](https://github.com/AndruhaRazebuha/Software_Engineering/assets/133500965/23ca488d-7840-4a73-87cb-c35102fb0288)
+![image](https://github.com/AndruhaRazebuha/Software_Engineering/assets/133500965/8fed4e7b-659a-4f92-83f5-d0691e75a8f2)
+
+
+
+## Выводы
+import os  # Импортируем модуль os для работы с файлами и операционной системой.
+
+def enter_expense():  # Объявляем функцию enter_expense для ввода информации о расходах.
+    expense_date = input("Введите дату расхода (например, 2023-10-21): ")  # Запрашиваем у пользователя ввод даты расхода.
+    expense_description = input("Введите описание расхода: ")  # Запрашиваем у пользователя ввод описания расхода.
+    expense_amount = float(input("Введите сумму расхода: "))  # Запрашиваем у пользователя ввод суммы расхода и преобразуем её в число.
+    return {  # Возвращаем словарь, содержащий введенные пользователем данные.
+        "Дата": expense_date,
+        "Описание": expense_description,
+        "Сумма": expense_amount
+    }
+
+def save_expense(expense, filename):  # Объявляем функцию save_expense для сохранения информации о расходах в файл.
+    with open(filename, "a", encoding="utf-8") as file:  # Открываем файл для записи (режим "a") с указанной кодировкой.
+        file.write(f"{expense['Дата']} - {expense['Описание']} - {expense['Сумма']} руб.\n")  # Записываем информацию о расходе в файл.
+
+def display_expenses(filename):  # Объявляем функцию display_expenses для вывода всех расходов из файла.
+    if not os.path.exists(filename):  # Проверяем, существует ли файл с указанным именем.
+        print("Файл с расходами пуст.")  # Если файл не существует, выводим сообщение об отсутствии данных и завершаем функцию.
+        return
+
+    with open(filename, "r", encoding="utf-8") as file:  # Открываем файл для чтения с указанной кодировкой.
+        expenses = file.readlines()  # Читаем все строки из файла и сохраняем их в список expenses.
+
+        if not expenses:  # Проверяем, пуст ли список расходов.
+            print("Файл с расходами пуст.")  # Если список пуст, выводим сообщение об отсутствии данных.
+        else:
+            print("Список расходов:")  # Если есть данные, выводим заголовок "Список расходов".
+            for expense in expenses:  # Перебираем каждый элемент списка expenses (каждую строку) и выводим его на экран.
+                print(expense, end="")  # Выводим расход и не переходим на новую строку.
+
+if __name__ == "__main__":
+    expense_file = "zadanie2.txt"  # Указываем имя файла, в котором будут храниться данные о расходах.
+
+    while True:
+        print("\nВыберите действие:")
+        print("1. Ввести новый расход")
+        print("2. Вывести список всех расходов")
+        print("3. Выход")
+        choice = input("Введите номер действия: ")  # Запрашиваем у пользователя выбор действия.
+
+        if choice == "1":  # Если пользователь выбрал действие 1.
+            expense = enter_expense()  # Запускаем функцию для ввода информации о расходе.
+            save_expense(expense, expense_file)  # Сохраняем введенный расход в файл.
+            print("Расход успешно добавлен.")  # Выводим сообщение об успешном добавлении расхода.
+        elif choice == "2":  # Если пользователь выбрал действие 2.
+            display_expenses(expense_file)  # Запускаем функцию для вывода всех расходов из файла.
+        elif choice == "3":  # Если пользователь выбрал действие 3.
+            break  # Выходим из цикла и завершаем программу.
+        else:
+            print("Неверный выбор. Попробуйте снова.")  # Если выбор пользователя не соответствует допустимым вариантам, выводим сообщение об ошибке.
+
+
+## Самостоятельная работа #3
+Имеется файл input.txt с текстом на латинице. Напишите программу, которая выводит следующую статистику по тексту: количество букв латинского алфавита; число слов; число строк. • Текст в файле: Beautiful is better than ugly. Explicit is better than implicit. Simple is better than complex. Complex is better than complicated. • Ожидаемый результат: Input file contains: 108 letters 20 words 4 lines
+```python
+with open('test.txt', 'r') as file:
+    content = file.read()
+
+letter_count = sum(1 for char in content if char.isalpha())
+word_count = len(content.split())
+line_count = content.count('\n') + 1
+
+print(f'Файл содержит {letter_count} букв {word_count} слов {line_count} строк')
+```
+
+### Результат.
+![image](https://github.com/AndruhaRazebuha/Software_Engineering/assets/133500965/fa4ae863-cb9a-44b6-9278-68cc7a42d69f)
+![image](https://github.com/AndruhaRazebuha/Software_Engineering/assets/133500965/712306bc-71c9-4353-a2e5-1232602b4544)
+
+
+
+## Выводы
+Открываем файл 'test.txt' в режиме чтения ('r') с использованием контекстного менеджера with. Это обеспечивает автоматическое закрытие файла после его использования, что уменьшает вероятность ошибок.
+Читаем содержимое файла и сохраняем его в переменной content.
+Вычисляем количество букв в тексте, используя генераторное выражение. Мы проходим по каждому символу char в content и проверяем, является ли символ буквой с помощью метода char.isalpha(). Каждый раз, когда условие выполняется, мы увеличиваем счетчик на 1.
+Вычисляем количество слов в тексте, разбивая content на слова с помощью метода split() и затем подсчитывая количество полученных слов с помощью len()
+Вычисляем количество строк в тексте, считая количество символов новой строки ('\n') и добавляя 1, так как первая строка не имеет символа новой строки.
+
+## Самостоятельная работа #4
+Напишите программу, которая получает на вход предложение, выводит его в терминал, заменяя все запрещенные слова звездочками * (количество звездочек равно количеству букв в слове). Запрещенные слова, разделенные символом пробела, хранятся в текстовом файле input.txt. Все слова в этом файле записаны в нижнем регистре. Программа должна заменить запрещенные слова, где бы они ни встречались, даже в сере
+```python
+# Создаем файл с вариациями запрещенных слов
+banned_words = ['hello', 'email', 'python', 'the', 'exam', 'wor', 'is']
+
+variations = set()
+for word in banned_words:
+    variations.add(word)
+    variations.add(word.lower())
+    variations.add(word.upper())
+    variations.add(word.capitalize())
+
+with open('banned_words.txt', 'w') as file:
+    for word in variations:
+        file.write(word + '\n')
+
+# Загружаем список запрещенных слов из файла
+with open('banned_words.txt', 'r') as banned_file:
+    banned_words = [line.strip() for line in banned_file]
+
+# Получаем предложение от пользователя
+sentence = input("Введите предложение: ")
+
+# Функция для замены запрещенных слов на звездочки
+def replace_banned(word):
+    for banned_word in banned_words:
+        word_lower = word.lower()
+        banned_lower = banned_word.lower()
+        word = word.replace(banned_word, '*' * len(banned_word))
+        word = word.replace(banned_lower, '*' * len(banned_word))
+    return word
+
+# Заменяем слова в предложении
+new_sentence = ' '.join(replace_banned(word) for word in sentence.split())
+
+# Выводим предложение с заменой запрещенных слов
+print(new_sentence)
+```
+
+### Результат.
+![image](https://github.com/AndruhaRazebuha/Software_Engineering/assets/133500965/3a449b3e-55b2-43bd-9bb4-05add8b417fd)
+
+
+## Выводы
+# Создаем файл с вариациями запрещенных слов
+banned_words = ['hello', 'email', 'python', 'the', 'exam', 'wor', 'is']
+
+variations = set()
+for word in banned_words:
+    variations.add(word)
+    variations.add(word.lower())
+    variations.add(word.upper())
+    variations.add(word.capitalize())
+
+with open('banned_words.txt', 'w') as file:
+    for word in variations:
+        file.write(word + '\n')
+
+# Загружаем список запрещенных слов из файла
+with open('banned_words.txt', 'r') as banned_file:
+    banned_words = [line.strip() for line in banned_file]
+
+# Получаем предложение от пользователя
+sentence = input("Введите предложение: ")
+
+# Функция для замены запрещенных слов на звездочки
+def replace_banned(word):
+    for banned_word in banned_words:
+        word_lower = word.lower()
+        banned_lower = banned_word.lower()
+        word = word.replace(banned_word, '*' * len(banned_word))
+        word = word.replace(banned_lower, '*' * len(banned_word))
+    return word
+
+# Заменяем слова в предложении
+new_sentence = ' '.join(replace_banned(word) for word in sentence.split())
+
+# Выводим предложение с заменой запрещенных слов
+print(new_sentence)
 
 ## Общие выводы по теме
+Работа с файлами полезный аспект изучения Python
