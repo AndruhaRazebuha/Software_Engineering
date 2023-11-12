@@ -1,5 +1,5 @@
-# Тема 7. Работа с файлами
-Отчет по Теме #7 выполнил:
+# Тема 7. Введение в ООП
+Отчет по Теме #8 выполнил:
 - Постовалов Андрей Георгиевич
 - ПИЭ-21-2
 
@@ -159,12 +159,12 @@ class Person:
 
     def greet(self, other_person):
         print(f"Привет, {other_person.name}! Я {self.name}, рад видеть тебя.")
-# Создаем объекты класса Person
+ Создаем объекты класса Person
 person1 = Person("Андрей", 20, "студент")
 person2 = Person("Иван", 25, "инженер")
-# Вызываем метод introduce для объекта person1
+ Вызываем метод introduce для объекта person1
 person1.introduce()
-# Вызываем метод greet для объекта person1, поздоровавшись с person2
+ Вызываем метод greet для объекта person1, поздоровавшись с person2
 person1.greet(person2)
 class Student(Person):
     def __init__(self, name, age, occupation, student_id):
@@ -172,16 +172,134 @@ class Student(Person):
         self.student_id = student_id
     def study(self, subject):
         print(f"{self.name} с номером студента {self.student_id} учит {subject}.")
-# Создаем объект класса Student
+ Создаем объект класса Student
 student1 = Student("Елена", 22, "студент", "12345")
-# Вызываем метод introduce для объекта student1 (наследован от класса Person)
+ Вызываем метод introduce для объекта student1 (наследован от класса Person)
 student1.introduce()
-# Вызываем метод study для объекта student1
+ Вызываем метод study для объекта student1
 student1.study("математику")
 
+
+
+## Самостоятельная работа №4
+Самостоятельно реализуйте инкапсуляцию, продолжая работать с ранее созданным классом. Она должна отличаться, от того, что указана в теоретическом материале (методичке) и лабораторных заданиях.
+Результатом выполнения задания будет листинг кода и получившийся вывод консоли
+
+```python
+class Person:
+    def __init__(self, name, age, occupation):
+        self.name = name
+        self.__age = age  # Сделаем атрибут age приватным с использованием двойного подчеркивания
+        self.occupation = occupation
+
+    # Геттер для получения значения атрибута age
+    def get_age(self):
+        return self.__age
+
+    # Сеттер для установки значения атрибута age
+    def set_age(self, age):
+        if age >= 0:
+            self.__age = age
+        else:
+            print("Возраст не может быть отрицательным.")
+
+    def introduce(self):
+        print(f"Привет, меня зовут {self.name} и мне {self.get_age()} лет. Я работаю как {self.occupation}.")
+
+# Создаем объект класса Person
+person1 = Person("Анна", 30, "врач")
+
+# Попробуем установить возраст через сеттер
+person1.set_age(35)
+
+# Вызываем метод introduce для объекта person1
+person1.introduce()
+```
+
+### Результат.
+![image](https://github.com/AndruhaRazebuha/Software_Engineering/assets/133500965/cef08cb3-7f75-40a3-b808-5c7cd8d8b8a7)
+
+
+
+## Выводы
+class Person:
+    def __init__(self, name, age, occupation):
+        self.name = name
+        self.__age = age   Сделаем атрибут age приватным с использованием двойного подчеркивания
+        self.occupation = occupation
+     Геттер для получения значения атрибута age
+    def get_age(self):
+        return self.__age
+     Сеттер для установки значения атрибута age
+    def set_age(self, age):
+        if age >= 0:
+            self.__age = age
+        else:
+            print("Возраст не может быть отрицательным.")
+    def introduce(self):
+        print(f"Привет, меня зовут {self.name} и мне {self.get_age()} лет. Я работаю как {self.occupation}.")
+ Создаем объект класса Person
+person1 = Person("Анна", 30, "врач")
+ Попробуем установить возраст через сеттер
+person1.set_age(35)
+ Вызываем метод introduce для объекта person1
+person1.introduce()
+
+
+
+## Самостоятельная работа №5
+Самостоятельно реализуйте полиморфизм. Он должен отличаться, от того, что указан в теоретическом материале (методичке) и лабораторных заданиях. 
+Результатом выполнения задания будет листинг кода и получившийся вывод консоли
+```python
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    def sound(self):
+        pass
+
+
+class Dog(Animal):
+    def sound(self):
+        return "Гав-гав!"
+
+
+class Cat(Animal):
+    def sound(self):
+        return "Мяу!"
+
+
+# Создаем список животных
+animals = [Dog("Барон"), Cat("Мурзик")]
+
+# Перебираем список животных и вызываем метод sound для каждого
+for animal in animals:
+    print(f"{animal.name}: {animal.sound()}")
+```
+
+### Результат.
+![image](https://github.com/AndruhaRazebuha/Software_Engineering/assets/133500965/4c7a1e6c-49f8-4c59-a306-fea2968e4fe0)
+
+## Выводы
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    def sound(self):
+        pass
+class Dog(Animal):
+    def sound(self):
+        return "Гав-гав!"
+class Cat(Animal):
+    def sound(self):
+        return "Мяу!"
+ Создаем список животных
+animals = [Dog("Барон"), Cat("Мурзик")]
+ Перебираем список животных и вызываем метод sound для каждого
+for animal in animals:
+    print(f"{animal.name}: {animal.sound()}")
 
 
 
 
 ## Общие выводы по теме
-Работа с файлами полезный аспект изучения Python
+ООП важный аспект программирования
