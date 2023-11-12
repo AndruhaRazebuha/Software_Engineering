@@ -204,7 +204,7 @@ if __name__ == "__main__":
 ## Выводы
 import time
 
-# Создаем класс декоратора
+ Создаем класс декоратора
 class TimingDecorator:
     def __init__(self, func):
         self.func = func
@@ -215,7 +215,7 @@ class TimingDecorator:
         execution_time = end_time - start_time
         print(f"Время выполнения функции {self.func.__name__}: {execution_time} секунд")
         return result
-# Используем декоратор для двух функций
+ Используем декоратор для двух функций
 @TimingDecorator
 def example_function_1():
     print("Выполняется функция 1")
@@ -264,13 +264,13 @@ if __name__ == "__main__":
 
 
 ## Выводы
-# Создаем собственное исключение
+ Создаем собственное исключение
 class ValueTooSmallError(Exception):
     def __init__(self, value, threshold):
         self.value = value
         self.threshold = threshold
         super().__init__(f"Значение {value} меньше порога {threshold}")
-# Используем исключение в функции
+ Используем исключение в функции
 def check_value(value):
     threshold = 10
     try:
